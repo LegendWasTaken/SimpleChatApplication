@@ -1,7 +1,3 @@
-//
-// Created by howto on 26/7/2021.
-//
-
 #include "network_processor.h"
 
 ca::network_processor::~network_processor() {
@@ -47,7 +43,7 @@ void ca::network_processor::_tick() {
                 _outgoing.clear();
 
                 for (const auto hash : _read_messages) {
-                    auto data = std::array<std::byte, 5>();
+                    auto data = std::array<std::byte, 1 + sizeof(size_t)>();
                     data[0] = std::byte(1);
                     std::memcpy(data.data() + 1, &hash, sizeof(size_t));
                     _connector.write(data.data(), data.size());
@@ -93,7 +89,7 @@ void ca::network_processor::_tick() {
                 _outgoing.clear();
 
                 for (const auto hash : _read_messages) {
-                    auto data = std::array<std::byte, 5>();
+                    auto data = std::array<std::byte, 1 + sizeof(size_t)>();
                     data[0] = std::byte(1);
                     std::memcpy(data.data() + 1, &hash, sizeof(size_t));
                     _socket.write(data.data(), data.size());
