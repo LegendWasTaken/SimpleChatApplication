@@ -214,8 +214,12 @@ namespace ca {
         /// \param msg The message from yourself
         inline void display_your_chat(const ca::message &msg) {
             const auto time = msg.local_time_sent();
-            const auto tail_message = std::format(" [%02hhu:%02hhu %s] - You", time.hour, time.minute,
-                                                  time.am ? "AM" : "PM");
+
+            // Due to clang / gcc not having std::format, I've had to resort to using C functions to implement this
+            auto tail_message_buffer = std::array<char, 33>();
+            snprintf(tail_message_buffer.data(), 32, " [%02hhu:%02hhu %s] - You", time.hour, time.minute, time.am ? "AM" : "PM");
+            auto tail_message = std::string(tail_message_buffer.data());
+
             auto text_width =
                     ImGui::CalcTextSize(msg.content().c_str()).x + ImGui::CalcTextSize(tail_message.c_str()).x;
             if (msg.seen())
