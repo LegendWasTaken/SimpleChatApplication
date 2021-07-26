@@ -58,10 +58,16 @@ namespace ca {
 
         [[nodiscard]] ca::message::sender sent_by() const noexcept { return _sender; }
 
+        /// The time that the message was originally created / sent
+        /// \return The time in seconds since epoch
         [[nodiscard]] std::uint64_t time_sent() const noexcept { return _sent; }
 
+        /// The message string content
+        /// \return Message content
         [[nodiscard]] const std::string &content() const noexcept { return _content; }
 
+        /// Gives you a unique identifier for the message by using it's hash
+        /// \return The message unique hash
         [[nodiscard]] size_t hash() const noexcept { return _hash; }
 
         [[nodiscard]] bool operator==(size_t hash) const noexcept {
@@ -75,6 +81,8 @@ namespace ca {
             uint8_t hour;
         };
 
+        /// Similar to #time-sent, but instead returns a struct with a nicer human readable struct
+        /// \return A struct of the local time the message was sent
         [[nodiscard]] local_time local_time_sent() const noexcept {
             auto tp = std::chrono::system_clock::time_point(std::chrono::seconds(_sent));
             auto time = std::chrono::system_clock::to_time_t(tp);
@@ -86,6 +94,8 @@ namespace ca {
         }
 
     private:
+
+        /// Creates a hash from the message content and timestamp, allowing for unique-identifiers
         void _calc_hash() {
             const auto combined_string = _content + std::to_string(_sent);
 

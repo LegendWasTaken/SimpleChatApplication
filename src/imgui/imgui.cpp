@@ -3460,7 +3460,7 @@ void ImGui::SetAllocatorFunctions(ImGuiMemAllocFunc alloc_func, ImGuiMemFreeFunc
     GImAllocatorUserData = user_data;
 }
 
-// This is provided to facilitate copying allocators from one static/DLL boundary to another (e.g. retrieve default allocator of your executable address space)
+// This is provided to facilitate copying allocators from one static/DLL boundary to another (e.g. retrieve default allocator of your executable server_address space)
 void ImGui::GetAllocatorFunctions(ImGuiMemAllocFunc* p_alloc_func, ImGuiMemFreeFunc* p_free_func, void** p_user_data)
 {
     *p_alloc_func = GImAllocatorAllocFunc;
