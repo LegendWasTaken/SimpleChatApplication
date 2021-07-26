@@ -79,9 +79,9 @@ void ca::network_processor::_tick() {
                         auto message_hash = size_t();
                         read = _connector.read(&message_hash, sizeof(size_t));
                         _inc_read_messages.push_back(message_hash);
+                    } else if (packet_type == std::byte(2)) {
+                        _error = "Other user disconnected";
                     }
-
-
                 }
             }
                 break;
@@ -125,6 +125,8 @@ void ca::network_processor::_tick() {
                         auto message_hash = size_t();
                         read = _socket.read(&message_hash, sizeof(size_t));
                         _inc_read_messages.push_back(message_hash);
+                    } else if (packet_type == std::byte(2)) {
+                        _error = "Other user disconnected";
                     }
                 }
             }
@@ -154,7 +156,7 @@ void ca::network_processor::connect(const std::string &address, std::uint16_t po
         _connector.connect({address, port});
     } catch (...)
     {
-        std::terminate();
+        _error = "Failed to connect to server";
     }
 
     _connected = true;
@@ -216,5 +218,20 @@ ca::network_processor::network_processor() {
             if (_running)
                 _tick();
         }
+
+        switch (_mode) {
+            case client:
+                _connector.write("\2");
+                break;
+            case server:
+                _socket.write("\2");
+                break;
+            default:
+                break;
+        }
     });
+}
+
+std::string ca::network_processor::error() {
+    return _error;
 }

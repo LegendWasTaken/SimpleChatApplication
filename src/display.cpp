@@ -44,8 +44,13 @@ void ca::display::render(ca::network_processor &processor) const noexcept {
     ui::root_node(ui_ctx);
 
     // Start screen will reply with a bool if it's finished prompting the user for stuff
-    if (ui::display_start_screen(processor))
+
+    if (const auto error = processor.error(); !error.empty()) {
+        if (ui::display_error(error))
+            std::terminate();
+    } else if (ui::display_start_screen(processor))
         ui::handle_chat(processor, _focused);
+
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

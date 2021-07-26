@@ -307,5 +307,21 @@ namespace ca {
             }
         }
 
+        /// Display an error to the user, and then shutdown once it's been acknowledged
+        /// \param error The string that explains the error
+        /// \return if the user has acknowledged the error
+        [[nodiscard]] inline bool display_error(const std::string &error) {
+
+            ImGui::Begin("Error");
+
+            ImGui::Text("Due to an error [%s], the application cannot continue running", error.c_str());
+
+            auto acknowledged = ImGui::Button("Ok");
+
+            ImGui::End();
+
+            return acknowledged;
+        }
+
     }
 }

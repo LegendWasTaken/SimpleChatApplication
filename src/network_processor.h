@@ -69,12 +69,18 @@ namespace ca {
         /// \return The read messages
         [[nodiscard]] std::vector<size_t> read_messages();
 
+        /// Error handling, this will return the lastest error
+        /// \return Returns the current error, if none returns empty string
+        [[nodiscard]] std::string error();
+
     private:
         /// Internal function: The main processing loop that is executed on another thread
         void _tick();
 
         bool _connected = false;
         bool _waiting_on_connection = false;
+
+        std::string _error;
 
         std::uint16_t _server_port = 0;
 
