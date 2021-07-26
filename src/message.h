@@ -45,7 +45,6 @@ namespace ca {
 
             std::memcpy(data, &_sent, sizeof(std::uint64_t));
             data += sizeof(std::uint64_t);
-            std::size_t;
 
             std::memcpy(data, &size, sizeof(size_t));
             data += sizeof(size_t);
