@@ -16,7 +16,10 @@ add_executable(ChatApplication
         src/imgui/imgui_tables.cpp
         src/imgui/imgui_widgets.cpp
         src/imgui/imgui_impl_glfw.cpp
-        src/client_mode.h src/message.h src/network_processor.cpp src/network_processor.h)
+        src/client_mode.h
+        src/message.h
+        src/network_processor.cpp
+        src/network_processor.h)
 
 target_include_directories(ChatApplication PRIVATE src ext)
 target_link_libraries(ChatApplication PRIVATE glfw sockpp-static)

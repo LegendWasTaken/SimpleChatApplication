@@ -3,6 +3,9 @@ option(GLFW_BUILD_TESTS "" OFF)
 option(GLFW_BUILD_DOCS "" OFF)
 option(GLFW_INSTALL "" OFF)
 
+option(SOCKPP_BUILD_STATIC "" ON)
+option(SOCKPP_BUILD_SHARED "" OFF)
+
 include(FetchContent)
 
 FetchContent_Declare(
