@@ -117,7 +117,7 @@ namespace ca {
 
         /// Displays server information for when the server is created and waiting for a client connection
         inline void display_server_information(std::uint16_t port) {
-            ImGui::Begin("Server Information");
+            ImGui::Begin("Server Information", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
             ImGui::Text("Target port is %hu", port);
             ImGui::End();
         }
